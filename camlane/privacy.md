@@ -41,7 +41,7 @@ This policy covers the Camlane Android app (the ad-supported `ads` build from Gi
 
 ## Advertising (`ads` build only)
 
-The `ads` build from GitHub Releases or Google Play shows banner ads from **Google AdMob**: one banner on each screen (the device list, the camera screen, settings, about and the QR scanner), and none in dialogs or sheets. Banners never cover the camera picture or any control. There are no full-screen, video, pop-up or app-open ads. The camera screen banner keeps loading while you stream, so ad requests continue during a streaming session; it refreshes about once a minute. Ads do not load when the phone is offline.
+The `ads` build from GitHub Releases or Google Play shows banner ads from **Google AdMob**: one banner on each screen (the device list, the camera screen, settings, about and the QR scanner), and none in dialogs or sheets. Banners never cover the camera picture or any control. There are no full-screen, video, pop-up or app-open ads. The camera screen banner stays visible during a streaming session. It doesn't request new ads until the stream ends. Ads do not load when the phone is offline.
 
 Google may collect and use your device's advertising ID, IP address, device information and ad interactions to deliver, measure and personalise ads. Read **[How Google uses information from sites or apps that use its services](https://policies.google.com/technologies/partner-sites)** and the [Google Privacy Policy](https://policies.google.com/privacy).
 
