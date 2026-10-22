@@ -1,0 +1,234 @@
+<!doctype html>
+{% comment %}
+  Download pages for Camlane. Source of truth: docs/_layouts/camlane-download.html
+  and docs/download/*.html in aryan0078/camlane. scripts/publish-site.sh copies them
+  to the developer site (aryan0078.github.io), which serves /camlane/download/.
+
+  Every button points at GitHub's "latest release" URL for a fixed file name, so
+  the links never go stale. The script at the bottom asks the GitHub API for the
+  latest release to show the version and file sizes. If the API answers 404 (the
+  repo is still private, or nothing is released yet) the page says downloads open
+  soon instead of sending people to a GitHub 404.
+{% endcomment %}
+{% assign base = "https://aryan0078.github.io/camlane/download/" %}
+{% assign dl = "https://github.com/aryan0078/camlane/releases/latest/download/" %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.description }}">
+<link rel="canonical" href="{{ base }}{% if page.os != 'all' %}{{ page.os }}/{% endif %}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:url" content="{{ base }}{% if page.os != 'all' %}{{ page.os }}/{% endif %}">
+<meta name="theme-color" content="#0B1020">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Camlane",
+  "description": "Free, open-source app that turns an Android phone into a low-latency webcam and microphone for Linux, Windows and macOS over Wi-Fi or LAN.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "{% case page.os %}{% when 'windows' %}Windows 10, Windows 11{% when 'macos' %}macOS{% when 'linux' %}Linux{% when 'android' %}Android 8.0+{% else %}Android, Windows, macOS, Linux{% endcase %}",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "author": { "@type": "Person", "name": "Aryan Singh", "url": "https://github.com/aryan0078" },
+  "url": "{{ base }}{% if page.os != 'all' %}{{ page.os }}/{% endif %}",
+  "downloadUrl": "{{ base }}{% if page.os != 'all' %}{{ page.os }}/{% endif %}"
+}
+</script>
+<style>
+:root{--bg:#0B1020;--panel:#121a33;--panel2:#18223f;--line:#26325a;--text:#e8ecf8;--muted:#9aa6c7;--accent:#4F8CFF;--accent2:#7aa8ff;--warn:#f5b84a;--ok:#3ddc97;color-scheme:dark}
+@media (prefers-color-scheme:light){:root{--bg:#f6f8fd;--panel:#fff;--panel2:#eef2fb;--line:#d8def0;--text:#121a33;--muted:#56618a;--accent:#2f6fe8;--accent2:#2f6fe8;color-scheme:light}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent2)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 8px;display:flex;align-items:center;gap:12px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--panel2);display:grid;place-items:center;border:1px solid var(--line)}
+.logo i{width:18px;height:18px;border-radius:50%;border:3px solid var(--accent);display:block}
+.brand{font-weight:700;font-size:18px;text-decoration:none;color:var(--text)}
+nav{margin-left:auto;display:flex;gap:16px;font-size:14px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover,nav a[aria-current]{color:var(--text)}
+h1{font-size:clamp(28px,4.5vw,44px);line-height:1.15;margin:28px 0 10px;letter-spacing:-.02em}
+.lead{color:var(--muted);font-size:18px;max-width:720px;margin:0 0 18px}
+.status{display:inline-flex;gap:8px;align-items:center;font-size:14px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.status b{color:var(--text);font-weight:600}
+.notice{display:none;margin:18px 0 0;padding:14px 16px;border-radius:12px;border:1px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent)}
+.soon .notice{display:block}
+.grid{display:grid;gap:16px;margin:28px 0;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.single .grid{grid-template-columns:1fr}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s}
+.card.you{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.card h2{margin:0;font-size:20px;display:flex;align-items:center;gap:8px}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+.tag.beta{color:var(--warn);border-color:var(--warn)}
+.you-badge{display:none;font-size:12px;color:var(--accent2)}.card.you .you-badge{display:block}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.btns{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.single .btns{flex-direction:row;flex-wrap:wrap}
+.btn{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-weight:600;font-size:15px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn:hover{filter:brightness(1.08)}
+.btn:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
+.btn small{font-weight:400;opacity:.8;font-size:12px;white-space:nowrap}
+.soon .btn.gh{pointer-events:none;opacity:.45}
+.steps{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:8px 0 28px}
+.steps h2{margin:0 0 8px;font-size:20px}
+.steps ol{margin:0;padding-left:20px}.steps li{margin:6px 0}
+code{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:14px}
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;font-size:13px}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:20px 0 40px;margin-top:20px}
+.others{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 20px}
+</style>
+</head>
+<body class="{% if page.os != 'all' %}single{% endif %}">
+<div class="wrap">
+<header>
+  <div class="logo" aria-hidden="true"><i></i></div>
+  <a class="brand" href="{{ base }}">Camlane</a>
+  <nav aria-label="Platforms">
+    <a href="{{ base }}windows/"{% if page.os == 'windows' %} aria-current="page"{% endif %}>Windows</a>
+    <a href="{{ base }}macos/"{% if page.os == 'macos' %} aria-current="page"{% endif %}>macOS</a>
+    <a href="{{ base }}linux/"{% if page.os == 'linux' %} aria-current="page"{% endif %}>Linux</a>
+    <a href="{{ base }}android/"{% if page.os == 'android' %} aria-current="page"{% endif %}>Android</a>
+  </nav>
+</header>
+
+<main>
+<h1>{{ page.heading }}</h1>
+<p class="lead">{{ page.lead }}</p>
+<span class="status" id="status" aria-live="polite">Latest release: <b id="ver">checking…</b></span>
+<div class="notice" role="status"><b>Downloads open soon.</b> The first public release of Camlane is being prepared. This page will link to it automatically, so bookmark it or check back shortly.</div>
+
+<div class="grid">
+{% if page.os == 'all' or page.os == 'windows' %}
+  <section class="card" data-os="windows" aria-labelledby="h-win">
+    <span class="you-badge">Recommended for this computer</span>
+    <h2 id="h-win">Windows <span class="tag">10 / 11 · x64</span></h2>
+    <p>Desktop receiver with live preview and remote camera controls. Virtual camera is experimental and uses the OBS Virtual Camera driver.</p>
+    <div class="btns">
+      <a class="btn primary gh" data-asset="camlane-desktop-windows-x86_64-setup.exe" href="{{ dl }}camlane-desktop-windows-x86_64-setup.exe">Download installer (.exe) <small></small></a>
+      {% if page.os == 'windows' %}<a class="btn gh" data-asset="camlane-desktop-windows-x86_64.msi" href="{{ dl }}camlane-desktop-windows-x86_64.msi">MSI package <small></small></a>
+      <a class="btn gh" data-asset="camlane-cli-windows-x86_64.zip" href="{{ dl }}camlane-cli-windows-x86_64.zip">Command-line receiver (.zip) <small></small></a>{% endif %}
+    </div>
+  </section>
+{% endif %}
+{% if page.os == 'all' or page.os == 'macos' %}
+  <section class="card" data-os="macos" aria-labelledby="h-mac">
+    <span class="you-badge">Recommended for this computer</span>
+    <h2 id="h-mac">macOS <span class="tag beta">beta</span></h2>
+    <p>Preview and audio work today. The virtual camera for other apps is coming soon.</p>
+    <div class="btns">
+      <a class="btn primary gh" data-asset="camlane-desktop-macos-aarch64.dmg" href="{{ dl }}camlane-desktop-macos-aarch64.dmg">Apple Silicon (M1 and later) <small></small></a>
+      <a class="btn gh" data-asset="camlane-desktop-macos-x86_64.dmg" href="{{ dl }}camlane-desktop-macos-x86_64.dmg">Intel Mac <small></small></a>
+      {% if page.os == 'macos' %}<a class="btn gh" data-asset="camlane-cli-macos-aarch64.tar.gz" href="{{ dl }}camlane-cli-macos-aarch64.tar.gz">CLI, Apple Silicon (.tar.gz) <small></small></a>
+      <a class="btn gh" data-asset="camlane-cli-macos-x86_64.tar.gz" href="{{ dl }}camlane-cli-macos-x86_64.tar.gz">CLI, Intel (.tar.gz) <small></small></a>{% endif %}
+    </div>
+  </section>
+{% endif %}
+{% if page.os == 'all' or page.os == 'linux' %}
+  <section class="card" data-os="linux" aria-labelledby="h-linux">
+    <span class="you-badge">Recommended for this computer</span>
+    <h2 id="h-linux">Linux <span class="tag">x86_64</span></h2>
+    <p>Full support: virtual camera through v4l2loopback and an automatic "Camlane Microphone" on PipeWire or PulseAudio.</p>
+    <div class="btns">
+      <a class="btn primary gh" data-asset="camlane-desktop-linux-x86_64.AppImage" href="{{ dl }}camlane-desktop-linux-x86_64.AppImage">AppImage (any distro) <small></small></a>
+      <a class="btn gh" data-asset="camlane-desktop-linux-x86_64.deb" href="{{ dl }}camlane-desktop-linux-x86_64.deb">Ubuntu / Debian (.deb) <small></small></a>
+      {% if page.os == 'linux' %}<a class="btn gh" data-asset="camlane-cli-linux-x86_64.tar.gz" href="{{ dl }}camlane-cli-linux-x86_64.tar.gz">Command-line receiver (.tar.gz) <small></small></a>{% endif %}
+    </div>
+  </section>
+{% endif %}
+{% if page.os == 'all' or page.os == 'android' %}
+  <section class="card" data-os="android" aria-labelledby="h-android">
+    <span class="you-badge">Recommended for this device</span>
+    <h2 id="h-android">Android <span class="tag">8.0+</span></h2>
+    <p>The phone app. Small banner ads on non-camera screens fund development; no feature is locked.</p>
+    <div class="btns">
+      {% if page.play_live %}<a class="btn primary" href="https://play.google.com/store/apps/details?id=app.camlane">Get it on Google Play <small></small></a>
+      <a class="btn gh" data-asset="camlane-android.apk" href="{{ dl }}camlane-android.apk">Direct download (.apk) <small></small></a>
+      {% else %}<a class="btn primary gh" data-asset="camlane-android.apk" href="{{ dl }}camlane-android.apk">Download APK <small></small></a>
+      <span class="btn" aria-disabled="true">Google Play <small>coming soon</small></span>{% endif %}
+    </div>
+  </section>
+{% endif %}
+</div>
+
+{% if page.os == 'windows' %}
+<section class="steps"><h2>Set up on Windows</h2><ol>
+  <li>Run the installer. SmartScreen may warn because the app is not code-signed yet: choose <b>More info → Run anyway</b>.</li>
+  <li>For the virtual camera, install <a href="https://obsproject.com/">OBS Studio</a> once. Camlane uses its Virtual Camera driver; OBS does not need to stay open.</li>
+  <li>For the virtual microphone, install <a href="https://vb-audio.com/Cable/">VB-Cable</a> and pick <b>CABLE Input</b> as Camlane's audio output.</li>
+  <li>Open Camlane on your phone, tap this PC, and enter the PIN shown in the desktop app.</li>
+</ol></section>
+{% elsif page.os == 'macos' %}
+<section class="steps"><h2>Set up on macOS (beta)</h2><ol>
+  <li>Open the .dmg and drag Camlane to Applications. The app is not notarised yet: right-click it and choose <b>Open</b> the first time.</li>
+  <li>For a virtual microphone, install <a href="https://existential.audio/blackhole/">BlackHole</a> and pick it as Camlane's audio output.</li>
+  <li>Open Camlane on your phone, tap this Mac, and enter the PIN shown in the desktop app.</li>
+</ol></section>
+{% elsif page.os == 'linux' %}
+<section class="steps"><h2>Set up on Linux</h2><ol>
+  <li>Install the virtual camera module once:
+<pre>sudo apt install v4l2loopback-dkms
+sudo modprobe v4l2loopback devices=1 video_nr=10 card_label="Camlane Camera" exclusive_caps=1</pre></li>
+  <li>AppImage: <code>chmod +x camlane-desktop-linux-x86_64.AppImage</code> and run it. Debian/Ubuntu: <code>sudo apt install ./camlane-desktop-linux-x86_64.deb</code>.</li>
+  <li>Open Camlane on your phone, tap this computer, and enter the PIN. Pick <b>Camlane Camera</b> and <b>Camlane Microphone</b> in your call app.</li>
+</ol></section>
+{% elsif page.os == 'android' %}
+<section class="steps"><h2>Set up on Android</h2><ol>
+  <li>Install Camlane. If you use the APK, allow your browser to install unknown apps when asked.</li>
+  <li>Install the desktop app on your computer: <a href="{{ base }}windows/">Windows</a>, <a href="{{ base }}macos/">macOS</a> or <a href="{{ base }}linux/">Linux</a>.</li>
+  <li>Keep both on the same Wi-Fi, open Camlane on the phone and tap your computer.</li>
+</ol></section>
+{% endif %}
+
+{% if page.os != 'all' %}<div class="others"><a class="btn" href="{{ base }}">All platforms</a></div>{% endif %}
+</main>
+
+<footer>
+  Camlane is free and open source (Apache-2.0). Downloads come from <a href="https://github.com/aryan0078/camlane/releases/latest">GitHub Releases</a>; verify them with the <code>SHA256SUMS.txt</code> file in each release.
+  <a href="https://aryan0078.github.io/camlane/privacy/">Privacy policy</a> · <a href="https://github.com/aryan0078/camlane">Source code</a> · <a href="https://github.com/sponsors/aryan0078">Sponsor</a>
+</footer>
+</div>
+
+<script>
+(function () {
+  // Highlight the card that matches the visitor's OS (all-platforms page only).
+  var ua = navigator.userAgent || "", os = null;
+  if (/Android/i.test(ua)) os = "android";
+  else if (/Windows/i.test(ua)) os = "windows";
+  else if (/Mac OS X|Macintosh/i.test(ua)) os = "macos";
+  else if (/Linux|X11/i.test(ua)) os = "linux";
+  var cards = document.querySelectorAll(".card[data-os]");
+  if (os && cards.length > 1) {
+    cards.forEach(function (c) { if (c.dataset.os === os) { c.classList.add("you"); c.parentNode.prepend(c); } });
+  }
+
+  // Ask GitHub for the latest release: version, date and file sizes.
+  var ver = document.getElementById("ver");
+  function mb(b) { return (b / 1048576).toFixed(b < 10485760 ? 1 : 0) + " MB"; }
+  fetch("https://api.github.com/repos/aryan0078/camlane/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+    .then(function (r) {
+      if (r.status === 404) { document.body.classList.add("soon"); ver.textContent = "not released yet"; return null; }
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function (rel) {
+      if (!rel) return;
+      var d = new Date(rel.published_at);
+      ver.textContent = rel.tag_name + " · " + d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+      var sizes = {};
+      (rel.assets || []).forEach(function (a) { sizes[a.name] = a.size; });
+      document.querySelectorAll("[data-asset]").forEach(function (a) {
+        var s = sizes[a.dataset.asset], small = a.querySelector("small");
+        if (s && small) small.textContent = mb(s);
+      });
+    })
+    .catch(function () { ver.textContent = "see GitHub Releases"; }); // rate limit or offline: links still work
+})();
+</script>
+</body>
+</html>
