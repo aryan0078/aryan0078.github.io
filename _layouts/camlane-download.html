@@ -102,7 +102,7 @@ h2{font-weight:600;font-size:17px;line-height:1.4;margin:40px 0 4px}
 .main .row{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:24px;grid-template-columns:1fr}
 .main .row .name{font-size:24px}
 .main .row .actions{justify-content:flex-start;margin-top:8px}
-.main .row .here{display:block}
+.row.is-you .here{display:block}
 .here{display:none;font:500 14px/1.3 var(--cond);color:var(--ok);margin-bottom:6px}
 
 /* Buttons */
@@ -262,21 +262,21 @@ sudo modprobe v4l2loopback devices=1 video_nr=10 card_label="Camlane Camera" exc
 
 <script>
 (function () {
-  // On the all-platforms page, move the visitor's platform into the main slot.
+  // Detect the visitor's platform. Label its row, and on the all-platforms page
+  // move that row into the main slot.
+  var ua = navigator.userAgent || "", os = null;
+  if (/Android/i.test(ua)) os = "android";
+  else if (/iPhone|iPad/i.test(ua)) os = null;
+  else if (/Windows/i.test(ua)) os = "windows";
+  else if (/Mac OS X|Macintosh/i.test(ua)) os = "macos";
+  else if (/Linux|X11|CrOS/i.test(ua)) os = "linux";
+  if (os) document.querySelectorAll('.row[data-os="' + os + '"]').forEach(function (r) { r.classList.add("is-you"); });
   var main = document.getElementById("main");
-  if (main) {
-    var ua = navigator.userAgent || "", os = null;
-    if (/Android/i.test(ua)) os = "android";
-    else if (/iPhone|iPad/i.test(ua)) os = null;
-    else if (/Windows/i.test(ua)) os = "windows";
-    else if (/Mac OS X|Macintosh/i.test(ua)) os = "macos";
-    else if (/Linux|X11|CrOS/i.test(ua)) os = "linux";
-    var row = os && document.querySelector('#list .row[data-os="' + os + '"]');
-    if (row) {
-      main.appendChild(row);
-      main.hidden = false;
-      document.getElementById("list-heading").textContent = "Other platforms";
-    }
+  var row = main && os && document.querySelector('#list .row[data-os="' + os + '"]');
+  if (row) {
+    main.appendChild(row);
+    main.hidden = false;
+    document.getElementById("list-heading").textContent = "Other platforms";
   }
 
   // Show the latest version and file sizes from the GitHub API.
