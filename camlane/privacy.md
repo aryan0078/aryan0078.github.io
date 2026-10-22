@@ -9,14 +9,16 @@ layout: default
 
 **Effective date: 2026-10-22**
 
-This policy covers the Camlane Android app (the ad-supported `ads` build published on GitHub Releases and the ad-free `foss` build you can compile yourself), the Camlane desktop app and `camlane-cli`. It is also published at https://aryan0078.github.io/camlane/privacy/.
+Updated 2026-10-22: banners now appear on every screen.
+
+This policy covers the Camlane Android app (the ad-supported `ads` build from GitHub Releases or Google Play, and the ad-free `foss` build you can compile yourself), the Camlane desktop app and `camlane-cli`. It is also published at https://aryan0078.github.io/camlane/privacy/.
 
 ## Summary
 
 - **Camlane itself collects nothing.** It has no accounts, analytics, telemetry or crash reporting, and no Camlane server exists to send data to.
 - **Your camera and microphone stream only to the desktop you pair with on your own local network.** They never go to the developers or to any server.
 - **The `ads` build includes Google AdMob**, which may collect data as described below. The **`foss` build contains no third-party advertising, analytics or tracking SDKs.**
-- **The desktop app fetches one static JSON file from GitHub** at most once a day to show a sponsor card. That request carries no identifiers.
+- **The desktop app fetches one static JSON file from GitHub** at most once a day to show a small sponsor strip. That request carries no identifiers.
 
 ## What is processed, where it goes, and who receives it
 
@@ -26,7 +28,7 @@ This policy covers the Camlane Android app (the ad-supported `ads` build publish
 | Pairing PIN and token, paired-device list, settings, imported LUTs | stored on your phone and your computer | nobody |
 | Discovery information: the desktop's display name, OS and Camlane version; the phone's model name and a random per-install ID | your local network only | devices on your local network and the desktop you connect to |
 | Logs | stored locally; shared only if you paste them into a bug report yourself | nobody unless you choose |
-| **`ads` build only:** advertising ID, IP address, device and app information, ad interactions | Google AdMob, when the phone is online | Google, under Google's policies (see below) |
+| **`ads` build only:** advertising ID, IP address, device and app information, ad interactions | Google AdMob, when the phone is online (including while you stream) | Google, under Google's policies (see below) |
 | **Desktop GUI only:** one HTTPS request for `sponsors/desktop.json`, at most once a day | `raw.githubusercontent.com` (GitHub) | GitHub receives the standard information of any web request (IP address, user agent) under the [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement). Camlane adds no cookies, identifiers or query parameters. |
 
 ## Permissions on Android
@@ -39,7 +41,7 @@ This policy covers the Camlane Android app (the ad-supported `ads` build publish
 
 ## Advertising (`ads` build only)
 
-The APK published on GitHub Releases shows banner ads from **Google AdMob** on the Devices and Settings screens. There are never ads on the camera preview. Ads pause while you stream and do not load when the phone is offline.
+The `ads` build from GitHub Releases or Google Play shows banner ads from **Google AdMob**: one banner on each screen (the device list, the camera screen, settings, about and the QR scanner), and none in dialogs or sheets. Banners never cover the camera picture or any control. There are no full-screen, video, pop-up or app-open ads. The camera screen banner keeps loading while you stream, so ad requests continue during a streaming session; it refreshes about once a minute. Ads do not load when the phone is offline.
 
 Google may collect and use your device's advertising ID, IP address, device information and ad interactions to deliver, measure and personalise ads. Read **[How Google uses information from sites or apps that use its services](https://policies.google.com/technologies/partner-sites)** and the [Google Privacy Policy](https://policies.google.com/privacy).
 

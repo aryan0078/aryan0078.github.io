@@ -12,7 +12,9 @@
   soon" instead of sending people to a GitHub 404 page.
 {% endcomment %}
 {% assign base = "https://aryan0078.github.io/camlane/download/" %}
-{% assign dl = "https://github.com/aryan0078/camlane/releases/latest/download/" %}
+{% comment %} Release files live in the public aryan0078/camlane-releases repo. {% endcomment %}
+{% assign releases_repo = "aryan0078/camlane-releases" %}
+{% capture dl %}https://github.com/{{ releases_repo }}/releases/latest/download/{% endcapture %}
 {% capture canonical %}{{ base }}{% if page.os != 'all' %}{{ page.os }}/{% endif %}{% endcapture %}
 <html lang="en">
 <head>
@@ -179,7 +181,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:16px}
   <div>
     <span class="here">This looks like your device</span>
     <div class="name">Android</div>
-    <div class="note">Android 8 and later. Small banner ads on screens without the camera fund development. No feature is locked.</div>
+    <div class="note">Android 8 and later. One small banner ad per screen funds development. Ads never cover the camera, and no feature is locked.</div>
   </div>
   <div class="actions">
     {% if page.play_live %}<a class="btn primary" href="https://play.google.com/store/apps/details?id=app.camlane">Get it on Google Play</a>
@@ -254,7 +256,7 @@ sudo modprobe v4l2loopback devices=1 video_nr=10 card_label="Camlane Camera" exc
   <div class="links">
     <a href="https://aryan0078.github.io/camlane/privacy/">Privacy policy</a>
     <a href="https://github.com/aryan0078/camlane">Source code</a>
-    <a href="https://github.com/aryan0078/camlane/releases">All releases</a>
+    <a href="https://github.com/{{ releases_repo }}/releases">All releases</a>
     <a href="https://github.com/sponsors/aryan0078">Sponsor</a>
   </div>
 </footer>
@@ -282,7 +284,7 @@ sudo modprobe v4l2loopback devices=1 video_nr=10 card_label="Camlane Camera" exc
   // Show the latest version and file sizes from the GitHub API.
   var out = document.getElementById("release");
   function size(b) { return (b / 1048576).toFixed(b < 10485760 ? 1 : 0) + " MB"; }
-  fetch("https://api.github.com/repos/aryan0078/camlane/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+  fetch("https://api.github.com/repos/{{ releases_repo }}/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
     .then(function (r) {
       if (r.status === 404) {
         document.body.classList.add("soon");
@@ -307,7 +309,7 @@ sudo modprobe v4l2loopback devices=1 video_nr=10 card_label="Camlane Camera" exc
     })
     .catch(function () {
       // Rate limited or offline. The links still work, so just point at the release list.
-      out.innerHTML = 'See <a href="https://github.com/aryan0078/camlane/releases/latest">the latest release on GitHub</a>';
+      out.innerHTML = 'See <a href="https://github.com/{{ releases_repo }}/releases/latest">the latest release on GitHub</a>';
     });
 })();
 </script>
