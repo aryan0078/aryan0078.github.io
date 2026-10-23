@@ -213,6 +213,17 @@ footer .links{display:flex;flex-wrap:wrap;gap:16px}
   <ul class="list main" id="main" hidden></ul>
   <h2 id="list-heading">All platforms</h2>
   <ul class="list" id="list">{{ row_windows }}{{ row_macos }}{{ row_linux }}{{ row_android }}</ul>
+
+  <h2>What you get</h2>
+  <ul class="list">
+    <li class="row"><div><div class="name">Your phone as a webcam and microphone</div><div class="note">Shows up as Camlane Camera and Camlane Microphone in Zoom, Meet, Teams, OBS, Discord and browsers. Works over Wi-Fi or a phone hotspot, with no internet and no account.</div></div></li>
+    <li class="row"><div><div class="name">Pro camera controls</div><div class="note">Up to 4K, 1440p or 1080p at 60 fps, with manual ISO, shutter, focus and white balance, zoom across lenses, torch and stabilisation, all adjustable from the computer during a call.</div></div></li>
+    <li class="row"><div><div class="name">Auto-framing with zoom lock</div><div class="note">Keeps your face in frame as you move, and holds it at the same size as you lean in or sit back.</div></div></li>
+    <li class="row"><div><div class="name">Looks</div><div class="note">Background blur, filters, colour adjustments and your own 3D LUTs, rendered on the phone before it sends the picture.</div></div></li>
+    <li class="row"><div><div class="name">Several phones at once</div><div class="note">Connect up to 4 phones, see them side by side and cut between angles, with Live and Standby tally lights on each phone.</div></div></li>
+    <li class="row"><div><div class="name">Fast, and works through firewalls</div><div class="note">Hardware video encoding with frames sent as soon as they're ready. If the computer's firewall blocks the phone, the computer connects to the phone instead.</div></div></li>
+  </ul>
+  <p class="lead" style="margin-top:20px">Coming in the next release: studio sound with noise cancellation, battery saver for room cameras, an auto-director that cuts to whoever is speaking, and picture-in-picture layouts.</p>
 {% else %}
   <ul class="list main">{% case page.os %}{% when 'windows' %}{{ row_windows }}{% when 'macos' %}{{ row_macos }}{% when 'linux' %}{{ row_linux }}{% when 'android' %}{{ row_android }}{% endcase %}</ul>
 
@@ -255,7 +266,6 @@ sudo modprobe v4l2loopback devices=1 video_nr=10 card_label="Camlane Camera" exc
   <p>Camlane is free and open source under the Apache 2.0 license. Every file comes from GitHub Releases. To check a download, compare it against <code>SHA256SUMS.txt</code> in the same release.</p>
   <div class="links">
     <a href="https://aryan0078.github.io/camlane/privacy/">Privacy policy</a>
-    <a href="https://github.com/aryan0078/camlane">Source code</a>
     <a href="https://github.com/{{ releases_repo }}/releases">All releases</a>
     <a href="https://github.com/sponsors/aryan0078">Sponsor</a>
   </div>
